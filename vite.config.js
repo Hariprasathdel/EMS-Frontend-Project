@@ -7,8 +7,17 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'http://localhost:5002',
         changeOrigin: true,
+        // The browser talks to Vite on the same origin. Remove its Origin
+        // header on the server-to-server hop so the API's browser CORS policy
+        // does not reject the dev server origin (localhost:5173).
+        secure: false,
+        configure: (proxy) => {
+          proxy.on('proxyReq', (proxyReq) => {
+            proxyReq.removeHeader('origin')
+          })
+        },
       },
     },
   },
