@@ -20,8 +20,13 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
-    if (token) {
+    // Public auth requests (especially login) must not inherit a stale token
+    // from a previous session. Some APIs reject that token before checking the
+    // submitted credentials, which makes a valid login appear forbidden.
+    if (!config.skipAuth && token) {
       config.headers.Authorization = `Bearer ${token}`;
+    } else if (config.skipAuth) {
+      delete config.headers.Authorization;
     }
     return config;
   },
@@ -43,11 +48,6 @@ api.interceptors.response.use(
       window.location.href = '/login';
     }
     
-    // Handle 403 Forbidden
-    if (error.response && error.response.status === 403) {
-      console.error('You do not have permission to perform this action');
-    }
-    
     return Promise.reject(error);
   }
 );
@@ -65,7 +65,7 @@ export const handleError = (error) => {
     // Server responded with error
     return {
       success: false,
-      message: error.response.data.message || 'Server error occurred',
+      message: error.response.data?.message || error.response.data?.error || 'Server error occurred',
       status: error.response.status,
       data: error.response.data
     };

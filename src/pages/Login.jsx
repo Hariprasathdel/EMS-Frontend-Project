@@ -46,7 +46,13 @@ const Login = () => {
     }
     setLoading(true);
     try {
-      await login(formData.email, formData.password);
+      const response = await login(formData.email, formData.password);
+      if (!response.success) {
+        setErrors({
+          general: response.error?.message || 'Login failed. Please check your credentials.'
+        });
+        return;
+      }
       navigate('/dashboard');
     } catch (err) {
       setErrors({ general: err.message || 'Invalid credentials. Try again.' });

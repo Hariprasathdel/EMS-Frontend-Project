@@ -15,7 +15,11 @@ class AuthService {
   // Login user
   async login(email, password) {
     try {
-      const response = await api.post(AUTH_ENDPOINTS.LOGIN, { email, password });
+      const response = await api.post(
+        AUTH_ENDPOINTS.LOGIN,
+        { email, password },
+        { skipAuth: true }
+      );
       const payload = handleResponse(response);
       // The API wraps the authenticated user and token in `data`. Normalize it
       // here so the auth context always receives the shape it expects.
