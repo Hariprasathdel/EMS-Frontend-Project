@@ -1,202 +1,216 @@
+// src/pages/Login.jsx
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import {
-  Container, 
-  Row, 
-  Col, 
-  Card, 
-  Form, 
-  Button, 
-  Alert, 
-  Spinner,
-  InputGroup
-} from 'react-bootstrap';
-import { 
-  FaUser, 
-  FaLock, 
-  FaEye, 
-  FaEyeSlash, 
-  FaBuilding,
-  FaShieldAlt
-} from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import './Login.css';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
   const { login } = useAuth();
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    remember: false,
+  });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+    setErrors((prev) => ({ ...prev, [name]: '' }));
+  };
+
+  const validate = () => {
+    const errs = {};
+    if (!formData.email.trim()) errs.email = 'Email is required';
+    else if (!/^\S+@\S+\.\S+$/.test(formData.email))
+      errs.email = 'Enter a valid email address';
+    if (!formData.password) errs.password = 'Password is required';
+    else if (formData.password.length < 6)
+      errs.password = 'Password must be at least 6 characters';
+    return errs;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validate inputs
-    if (!email.trim() || !password.trim()) {
-      setError('Please enter both email and password');
+    const errs = validate();
+    if (Object.keys(errs).length) {
+      setErrors(errs);
       return;
     }
-
     setLoading(true);
-    setError('');
-
     try {
-      const result = await login(email.trim(), password);
-
-      if (!result.success) {
-        setError(result.error?.message || 'Invalid email or password. Please try again.');
-        return;
-      }
-
-      if (rememberMe) {
-        localStorage.setItem('rememberMe', 'true');
-      } else {
-        localStorage.removeItem('rememberMe');
-      }
-
-      const destination = location.state?.from?.pathname || '/dashboard';
-      navigate(destination, { replace: true });
-    } catch {
-      setError('Login failed. Please try again later.');
+      await login(formData.email, formData.password);
+      navigate('/dashboard');
+    } catch (err) {
+      setErrors({ general: err.message || 'Invalid credentials. Try again.' });
     } finally {
       setLoading(false);
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
     <div className="login-page">
-      <Container fluid className="login-container">
-        <Row className="login-row">
-          <Col xs={12} className="login-form-col">
-            <div className="login-form-wrapper">
-              <div className="login-brand">
-                <div className="brand-icon">
-                  <FaBuilding />
-                </div>
-                <h1 className="brand-name">EMS</h1>
-                <p className="brand-tagline">Employee Management System</p>
-              </div>
+      <div className="login-page__overlay"></div>
 
-              <Card className="login-card">
-                <Card.Body className="p-4">
-                  <div className="login-header">
-                    <h3 className="login-title">Welcome Back</h3>
-                    <p className="login-subtitle">Sign in to your account to continue</p>
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-12 col-sm-10 col-md-7 col-lg-5 col-xl-4">
+            <div className="login-card">
+              <div className="login-card__body">
+                {/* Logo & Title */}
+                <div className="login-brand text-center">
+                  <div className="login-brand__logo">
+                    <i className="bi bi-building" aria-hidden="true"></i>
+                  </div>
+                  <h3 className="login-brand__title">Welcome Back</h3>
+                  <p className="login-brand__subtitle">
+                    Sign in to your HRMS account
+                  </p>
+                </div>
+
+                {errors.general && (
+                  <div className="alert alert-danger py-2 small" role="alert">
+                    {errors.general}
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} noValidate>
+                  {/* Email */}
+                  <div className="mb-3">
+                    <label htmlFor="email" className="login-label">
+                      Email Address
+                    </label>
+                    <div className="input-group login-input-group">
+                      <span className="input-group-text login-input-icon">
+                        <i className="bi bi-envelope"></i>
+                      </span>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        className={`form-control login-input ${
+                          errors.email ? 'is-invalid' : ''
+                        }`}
+                        placeholder="you@company.com"
+                        value={formData.email}
+                        onChange={handleChange}
+                        autoComplete="email"
+                      />
+                    </div>
+                    {errors.email && (
+                      <div className="text-danger small mt-1">{errors.email}</div>
+                    )}
                   </div>
 
-                  {error && (
-                    <Alert variant="danger" className="login-alert" dismissible>
-                      <Alert.Heading className="alert-heading">
-                        <FaShieldAlt className="me-2" />
-                        Login Failed
-                      </Alert.Heading>
-                      <p>{error}</p>
-                    </Alert>
-                  )}
-
-                  <Form onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3">
-                      <Form.Label className="form-label">
-                        <FaUser className="me-2" />
-                        Email Address
-                      </Form.Label>
-                      <Form.Control
-                        type="email"
-                        placeholder="Enter your email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="form-control-lg"
-                        disabled={loading}
-                        autoFocus
+                  {/* Password */}
+                  <div className="mb-3">
+                    <label htmlFor="password" className="login-label">
+                      Password
+                    </label>
+                    <div className="input-group login-input-group">
+                      <span className="input-group-text login-input-icon">
+                        <i className="bi bi-lock"></i>
+                      </span>
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        id="password"
+                        name="password"
+                        className={`form-control login-input ${
+                          errors.password ? 'is-invalid' : ''
+                        }`}
+                        placeholder="Enter your password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        autoComplete="current-password"
                       />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3">
-                      <Form.Label className="form-label">
-                        <FaLock className="me-2" />
-                        Password
-                      </Form.Label>
-                      <InputGroup>
-                        <Form.Control
-                          type={showPassword ? 'text' : 'password'}
-                          placeholder="Enter your password"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          className="form-control-lg"
-                          disabled={loading}
-                        />
-                        <Button
-                          type="button"
-                          variant="outline-secondary"
-                          onClick={togglePasswordVisibility}
-                          className="password-toggle"
-                          disabled={loading}
-                        >
-                          {showPassword ? <FaEyeSlash /> : <FaEye />}
-                        </Button>
-                      </InputGroup>
-                    </Form.Group>
-
-                    <Form.Group className="mb-3 d-flex justify-content-between align-items-center">
-                      <Form.Check
-                        type="checkbox"
-                        label="Remember me"
-                        checked={rememberMe}
-                        onChange={(e) => setRememberMe(e.target.checked)}
-                        disabled={loading}
-                        className="remember-check"
-                      />
-                      <a href="mailto:support@crm.com?subject=Password%20reset" className="forgot-password">
-                        Forgot Password?
-                      </a>
-                    </Form.Group>
-
-                    <Button 
-                      variant="primary" 
-                      type="submit" 
-                      className="login-btn"
-                      disabled={loading}
-                    >
-                      {loading ? (
-                        <>
-                          <Spinner animation="border" size="sm" className="me-2" />
-                          Signing in...
-                        </>
-                      ) : (
-                        'Sign In'
-                      )}
-                    </Button>
-
-                    <div className="login-footer">
-                      <p className="demo-credentials">
-                        <span className="demo-label">Demo Credentials:</span>
-                        <br />
-                        <span className="demo-text">Email: admin@ems.com</span>
-                        <br />
-                        <span className="demo-text">Password: admin@1234</span>
-                      </p>
+                      <button
+                        type="button"
+                        className="input-group-text login-input-icon login-input-toggle"
+                        onClick={() => setShowPassword((s) => !s)}
+                        tabIndex={-1}
+                        aria-label="Toggle password visibility"
+                      >
+                        <i
+                          className={`bi ${
+                            showPassword ? 'bi-eye-slash' : 'bi-eye'
+                          }`}
+                        ></i>
+                      </button>
                     </div>
-                  </Form>
-                </Card.Body>
-              </Card>
+                    {errors.password && (
+                      <div className="text-danger small mt-1">
+                        {errors.password}
+                      </div>
+                    )}
+                  </div>
 
-              <div className="login-copyright">
-                <p>&copy; {new Date().getFullYear()} EMS. All rights reserved.</p>
+                  {/* Remember & Forgot */}
+                  <div className="d-flex justify-content-between align-items-center mb-4">
+                    <div className="form-check">
+                      <input
+                        type="checkbox"
+                        id="remember"
+                        name="remember"
+                        className="form-check-input login-checkbox"
+                        checked={formData.remember}
+                        onChange={handleChange}
+                      />
+                      <label
+                        htmlFor="remember"
+                        className="form-check-label small"
+                      >
+                        Remember me
+                      </label>
+                    </div>
+                    <a href="/forgot-password" className="login-forgot">
+                      Forgot Password?
+                    </a>
+                  </div>
+
+                  {/* Submit */}
+                  <button
+                    type="submit"
+                    className="btn login-submit w-100"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm me-2"
+                          role="status"
+                        ></span>
+                        Signing in...
+                      </>
+                    ) : (
+                      <>
+                        Sign In <i className="bi bi-arrow-right ms-1"></i>
+                      </>
+                    )}
+                  </button>
+                </form>
+
+                <p className="login-footer-text">
+                  Don't have an account?{' '}
+                  <a href="/signup" className="login-link">
+                    Contact Admin
+                  </a>
+                </p>
               </div>
             </div>
-          </Col>
 
-        </Row>
-      </Container>
+            <p className="login-copyright">
+              © {new Date().getFullYear()} HRMS. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
