@@ -6,7 +6,7 @@ import './Login.css';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login: authenticate } = useAuth();
 
   const [formData, setFormData] = useState({
     email: '',
@@ -36,7 +36,6 @@ const Login = () => {
       errs.password = 'Password must be at least 6 characters';
     return errs;
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errs = validate();
@@ -46,7 +45,7 @@ const Login = () => {
     }
     setLoading(true);
     try {
-      const response = await login(formData.email, formData.password);
+      const response = await authenticate(formData.email, formData.password);
       if (!response.success) {
         setErrors({
           general: response.error?.message || 'Login failed. Please check your credentials.'

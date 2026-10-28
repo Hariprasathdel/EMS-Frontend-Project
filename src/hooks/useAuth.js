@@ -1,32 +1,65 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import axios from 'axios';
 
 /**
- * Custom hook for Authentication.
- * Provides user data, login/logout functions, and role-checking helpers.
+ * Custom hook for authentication
+ * Provides auth state and methods with additional utilities
  */
 export const useAuth = () => {
-  const context = useContext(AuthContext);
-
-  // Ensure the hook is used inside the AuthProvider
-  if (!context) {
+  const auth = useContext(AuthContext);
+  
+  if (!auth) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
 
-  // Helper: Check if user has a specific role
-  const hasRole = (role) => {
-    return context.user?.role === role;
-  };
+  const [isTokenExpired, setIsTokenExpired] = useState(false);
 
-  // Helper: Check if user is a Super Admin
-  const isAdmin = () => {
-    return context.user?.role === 'Super Admin' || context.user?.role === 'Admin';
-  };
+  // Check token expiration
+  useEffect(() => {
+    const checkToken = () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          const expiry = payload.exp * 1000;
+          setIsTokenExpired(Date.now() >= expiry);
+        } catch {
+          setIsTokenExpired(true);
+        }
+      }
+    };
+
+    checkToken();
+    const interval = setInterval(checkToken, 60000); // Check every minute
+    return () => clearInterval(interval);
+  }, []);
+
+  // Auto logout on token expiration
+  useEffect(() => {
+    if (isTokenExpired && auth.isAuthenticated) {
+      auth.logout();
+    }
+  }, [isTokenExpired, auth]);
+  // Set token in axios headers
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+      delete axios.defaults.headers.common['Authorization'];
+    }
+  }, [auth.isAuthenticated]);
 
   return {
-    ...context, // Spreads user, token, login, logout, etc.
-    hasRole,
-    isAdmin
+    ...auth,
+    isTokenExpired,
+    isAdmin: auth.user?.role === 'admin',
+    isManager: auth.user?.role === 'manager',
+    isEmployee: auth.user?.role === 'employee',
+    hasPermission: (permission) => {
+      return auth.user?.permissions?.includes(permission) || false;
+    }
   };
 };
 

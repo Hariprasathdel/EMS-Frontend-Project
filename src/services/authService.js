@@ -15,6 +15,8 @@ class AuthService {
   // Login user
   async login(email, password) {
     try {
+      // Login must not send a stale token from a previous session. The API
+      // interceptor also uses this flag to keep login failures on the form.
       const response = await api.post(
         AUTH_ENDPOINTS.LOGIN,
         { email, password },
