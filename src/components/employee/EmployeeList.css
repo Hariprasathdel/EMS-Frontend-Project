@@ -1,0 +1,107 @@
+/* EmployeeList.css */
+
+.employee-list-card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+  
+  .employee-table {
+    margin-bottom: 0;
+  }
+  
+  .employee-table thead th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1rem 1.5rem;
+  }
+  
+  .employee-table tbody td {
+    padding: 1rem 1.5rem;
+    color: #334155;
+    font-size: 0.95rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  
+  .employee-table tbody tr:hover {
+    background-color: #f8fafc;
+  }
+  
+  /* Employee Avatar */
+  .employee-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #4f46e5;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+  
+  /* Status Badges */
+  .badge.status-active {
+    background-color: #dcfce7;
+    color: #166534;
+  }
+  
+  .badge.status-inactive {
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
+  
+  /* Action Buttons */
+  .action-btn {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 0;
+    transition: all 0.2s ease;
+    border-width: 1.5px;
+  }
+  
+  .action-btn-edit {
+    color: #4f46e5;
+    border-color: #4f46e5;
+  }
+  
+  .action-btn-edit:hover {
+    background-color: #4f46e5;
+    color: #ffffff;
+  }
+  
+  .action-btn-delete {
+    color: #ef4444;
+    border-color: #ef4444;
+  }
+  
+  .action-btn-delete:hover {
+    background-color: #ef4444;
+    color: #ffffff;
+  }
+  
+  /* Empty State */
+  .empty-state {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    color: #94a3b8;
+  }
+  
+  .empty-state i {
+    font-size: 3rem;
+    opacity: 0.5;
+  }

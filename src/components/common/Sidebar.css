@@ -1,0 +1,41 @@
+/* Sidebar Container */
+.sidebar-container {
+    background-color: #1e3a8a; /* Deep Blue matching the image */
+    min-height: 100vh;
+    width: 250px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  }
+  
+  .sidebar-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Navigation Links */
+  .sidebar-nav .nav-link {
+    color: #e2e8f0;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+  }
+  
+  .sidebar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+  }
+  
+  /* Active State (Matches the 'Attendance' highlight in image) */
+  .sidebar-nav .nav-link.active {
+    background-color: #4f46e5; /* Lighter purple/blue */
+    color: #ffffff;
+    border-left: 4px solid #818cf8;
+    font-weight: 500;
+  }
+  
+  .sidebar-nav .nav-link i {
+    font-size: 1.1rem;
+  }

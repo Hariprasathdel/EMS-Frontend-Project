@@ -1,0 +1,109 @@
+/* RulesList.css */
+
+.rules-list-card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+  
+  .rules-table {
+    margin-bottom: 0;
+  }
+  
+  .rules-table thead th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1rem 1.5rem;
+  }
+  
+  .rules-table tbody td {
+    padding: 1rem 1.5rem;
+    color: #334155;
+    font-size: 0.95rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  
+  .rules-table tbody tr:hover {
+    background-color: #f8fafc;
+  }
+  
+  /* Policy Icon */
+  .policy-icon-wrapper {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background-color: #f0f4ff;
+    color: #4f46e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+  
+  /* Category Badges */
+  .category-badge {
+    font-weight: 500;
+    padding: 0.4em 0.8em;
+    border-radius: 6px;
+    font-size: 0.85rem;
+  }
+  
+  .cat-hr { background-color: #e0e7ff; color: #3730a3; }
+  .cat-it { background-color: #dcfce7; color: #166534; }
+  .cat-finance { background-color: #fef3c7; color: #92400e; }
+  .cat-default { background-color: #f1f5f9; color: #475569; }
+  
+  /* Status Badges */
+  .badge.status-active {
+    background-color: #dcfce7;
+    color: #166534;
+  }
+  
+  .badge.status-draft {
+    background-color: #f1f5f9;
+    color: #475569;
+  }
+  
+  /* Action Buttons */
+  .action-btn {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 0;
+    transition: all 0.2s ease;
+    border-width: 1.5px;
+  }
+  
+  .action-btn-view {
+    color: #4f46e5;
+    border-color: #4f46e5;
+  }
+  
+  .action-btn-view:hover {
+    background-color: #4f46e5;
+    color: #ffffff;
+  }
+  
+  /* Empty State */
+  .empty-state {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    color: #94a3b8;
+  }
+  
+  .empty-state i {
+    font-size: 3rem;
+    opacity: 0.5;
+  }

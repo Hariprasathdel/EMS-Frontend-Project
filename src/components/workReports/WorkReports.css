@@ -1,0 +1,15 @@
+/* WorkReports.css */
+.work-reports-container {
+    padding: 10px;
+  }
+  
+  .work-reports-container h2 {
+    color: #0f172a;
+  }
+  
+  @media (max-width: 991px) {
+    .work-reports-container .col-lg-4,
+    .work-reports-container .col-lg-8 {
+      width: 100%;
+    }
+  }

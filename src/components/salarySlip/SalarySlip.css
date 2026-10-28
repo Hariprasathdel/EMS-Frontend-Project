@@ -1,0 +1,18 @@
+/* SalarySlip.css */
+.salary-container {
+  padding: 10px;
+}
+
+.salary-container h2 {
+  color: #0f172a;
+}
+
+.salary-container .btn-primary {
+  background-color: #4f46e5;
+  border-color: #4f46e5;
+}
+
+.salary-container .btn-primary:hover {
+  background-color: #4338ca;
+  border-color: #4338ca;
+}

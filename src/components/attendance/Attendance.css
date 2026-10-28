@@ -1,0 +1,96 @@
+/* Attendance.css */
+
+/* Main Container */
+.attendance-container {
+    padding: 10px;
+  }
+  
+  /* --- Stats Cards (Top Row) --- */
+  .stat-card {
+    background-color: #f0f4ff; /* Light purple/blue background from image */
+    border: 1px solid rgba(0, 0, 0, 0.02);
+    height: 100%;
+    z-index: 1;
+  }
+  
+  .stat-value {
+    font-size: 2.8rem;
+    color: #1e3a8a; /* Deep blue color for the numbers */
+    line-height: 1;
+  }
+  
+  .stat-label {
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+  
+  /* Decorative circle in bottom right of cards */
+  .stat-circle {
+    position: absolute;
+    bottom: -25px;
+    right: -25px;
+    width: 120px;
+    height: 120px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    z-index: -1;
+  }
+  
+  /* --- Stats Summary (Middle Row) --- */
+  .stats-summary-container {
+    border: 1px solid #e2e8f0;
+  }
+  
+  .stat-summary-item {
+    padding: 0.5rem 1rem;
+  }
+  
+  .stat-summary-item.border-end {
+    border-color: #e2e8f0 !important;
+  }
+  
+  .stat-summary-item h4 {
+    font-size: 1.5rem;
+    color: #1e3a8a;
+  }
+  
+  /* --- Attendance Table (Bottom Row) --- */
+  .attendance-table-container {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .custom-attendance-table {
+    font-size: 0.95rem;
+  }
+  
+  /* Purple Header matching the image */
+  .custom-attendance-table thead {
+    background-color: #7c3aed; /* Distinct purple */
+    color: #ffffff;
+  }
+  
+  .custom-attendance-table thead th {
+    border: none;
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  
+  .custom-attendance-table tbody td {
+    padding: 1rem 1.25rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+  }
+  
+  .custom-attendance-table tbody tr:hover {
+    background-color: #f8fafc;
+  }
+  
+  .custom-attendance-table tbody tr:last-child td {
+    border-bottom: none;
+  }

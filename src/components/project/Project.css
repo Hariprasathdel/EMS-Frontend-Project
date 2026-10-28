@@ -1,0 +1,18 @@
+/* Project.css */
+.project-container {
+    padding: 10px;
+  }
+  
+  .project-container h2 {
+    color: #0f172a;
+  }
+  
+  .project-container .btn-primary {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+  }
+  
+  .project-container .btn-primary:hover {
+    background-color: #4338ca;
+    border-color: #4338ca;
+  }

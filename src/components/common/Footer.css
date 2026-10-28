@@ -1,0 +1,8 @@
+.footer-container {
+    margin-left: 250px; /* Offset for sidebar */
+    position: relative;
+    z-index: 10;
+  }
+  
+  /* If you are using a layout where footer is inside the main content area, 
+     you might not need the margin-left. Adjust based on your App.jsx layout. */

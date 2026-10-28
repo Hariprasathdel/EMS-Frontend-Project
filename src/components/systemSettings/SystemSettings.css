@@ -1,0 +1,45 @@
+/* SystemSettings.css */
+.system-settings-container {
+    padding: 10px;
+  }
+  
+  .system-settings-container h2 {
+    color: #0f172a;
+  }
+  
+  /* Custom Tab Navigation */
+  .settings-tabs {
+    display: flex;
+    gap: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 0;
+  }
+  
+  .settings-tab-btn {
+    background: none;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #64748b;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+    margin-bottom: -1px;
+  }
+  
+  .settings-tab-btn:hover {
+    color: #4f46e5;
+    background-color: #f8fafc;
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+  
+  .settings-tab-btn.active {
+    color: #4f46e5;
+    border-bottom-color: #4f46e5;
+    font-weight: 600;
+  }
+  
+  .settings-content {
+    padding-top: 1.5rem;
+  }

@@ -1,0 +1,18 @@
+/* Leave.css */
+.leave-container {
+    padding: 10px;
+  }
+  
+  .leave-container h2 {
+    color: #0f172a;
+  }
+  
+  .leave-container .btn-primary {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+  }
+  
+  .leave-container .btn-primary:hover {
+    background-color: #4338ca;
+    border-color: #4338ca;
+  }

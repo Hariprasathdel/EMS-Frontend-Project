@@ -1,0 +1,66 @@
+/* GeneralSettings.css */
+.general-settings-card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    background-color: #ffffff;
+  }
+  
+  /* Logo Upload Section */
+  .logo-upload-section {
+    border: 2px dashed #cbd5e1 !important;
+    transition: all 0.2s ease;
+  }
+  
+  .logo-upload-section:hover {
+    border-color: #4f46e5 !important;
+    background-color: #f8fafc !important;
+  }
+  
+  .logo-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 1rem;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+  }
+  
+  /* Form Controls (Consistent with other modules) */
+  .custom-form-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 0.4rem;
+  }
+  
+  .custom-form-control,
+  .custom-form-select {
+    border-radius: 0.5rem;
+    padding: 0.65rem 1rem;
+    border: 1px solid #cbd5e1;
+    font-size: 0.95rem;
+    color: #334155;
+    transition: all 0.2s ease;
+  }
+  
+  .custom-form-control:focus,
+  .custom-form-select:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    outline: none;
+  }
+  
+  /* Save Button */
+  .btn-save-settings {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-save-settings:hover {
+    background-color: #4338ca;
+    border-color: #4338ca;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3);
+  }

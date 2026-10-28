@@ -1,0 +1,83 @@
+/* ReportViewer.css */
+.report-viewer-card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    background-color: #ffffff;
+    min-height: 400px;
+  }
+  
+  /* Action Buttons */
+  .btn-action-sm {
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    padding: 0.4rem 1rem;
+    font-weight: 500;
+  }
+  
+  .btn-action-sm.btn-outline-primary {
+    color: #4f46e5;
+    border-color: #e0e7ff;
+    background-color: #f5f3ff;
+  }
+  
+  .btn-action-sm.btn-outline-primary:hover {
+    background-color: #4f46e5;
+    color: #ffffff;
+    border-color: #4f46e5;
+  }
+  
+  /* Summary Stats Boxes */
+  .stat-box {
+    background-color: #f8fafc;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f1f5f9;
+  }
+  
+  .stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  
+  .stat-label {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-top: 0.25rem;
+  }
+  
+  /* Report Table */
+  .report-table {
+    margin-bottom: 0;
+  }
+  
+  .report-table thead th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1rem 1.25rem;
+  }
+  
+  .report-table tbody td {
+    padding: 1rem 1.25rem;
+    color: #334155;
+    font-size: 0.95rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  
+  .report-table tbody tr:hover {
+    background-color: #f8fafc;
+  }
+  
+  /* Empty State */
+  .empty-state-viewer {
+    padding: 2rem;
+  }

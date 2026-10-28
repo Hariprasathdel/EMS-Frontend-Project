@@ -1,0 +1,92 @@
+/* Department Container */
+.department-container {
+    padding: 10px;
+  }
+  
+  /* Table Styling */
+  .table th {
+    font-weight: 600;
+    color: #64748b;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .table td {
+    color: #334155;
+    font-size: 0.95rem;
+    vertical-align: middle;
+  }
+  
+  /* Department Icon in Table */
+  .dept-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  
+  /* Action Buttons */
+  .btn-outline-primary, .btn-outline-danger {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+    color: white;
+  }
+  
+  .btn-outline-danger:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+  }
+  
+  /* Modal Styling Tweaks */
+  .modal-content {
+    border-radius: 1rem;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  
+  .modal-header {
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+  }
+  
+  .modal-body {
+    padding: 1.5rem;
+  }
+  
+  .form-control, .form-select {
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .form-control:focus, .form-select:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.1);
+  }
+  
+  .form-label {
+    font-size: 0.9rem;
+    color: #475569;
+    margin-bottom: 0.4rem;
+  }
+  
+  /* Custom Badge Colors */
+  .bg-success-subtle {
+    background-color: #d1e7dd !important;
+  }
+  .bg-danger-subtle {
+    background-color: #f8d7da !important;
+  }
+  .bg-primary-subtle {
+    background-color: #cfe2ff !important;
+  }

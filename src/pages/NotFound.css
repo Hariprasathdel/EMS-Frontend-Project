@@ -1,0 +1,41 @@
+/* NotFound.css */
+.not-found-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f8fafc;
+  }
+  
+  .not-found-illustration i {
+    font-size: 5rem;
+    color: #4f46e5;
+    background-color: #e0e7ff;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  
+  .not-found-content h1 {
+    font-size: 6rem;
+    line-height: 1;
+    color: #1e3a8a;
+  }
+  
+  .not-found-container .btn-primary {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+    transition: all 0.2s ease;
+  }
+  
+  .not-found-container .btn-primary:hover {
+    background-color: #4338ca;
+    border-color: #4338ca;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3);
+  }

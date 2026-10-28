@@ -1,0 +1,81 @@
+/* Dashboard Container */
+.dashboard-container {
+    padding: 10px;
+  }
+  
+  /* Stat Cards (Matching the image style) */
+  .stat-card {
+    background-color: #f0f4ff; /* Light purple/blue background */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  }
+  
+  .stat-card h3 {
+    font-size: 2.5rem;
+    color: #1e3a8a; /* Deep blue text for numbers */
+    line-height: 1;
+  }
+  
+  .stat-icon {
+    width: 45px;
+    height: 45px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  
+  /* Decorative circle in the bottom right of the card */
+  .stat-circle {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    z-index: 0;
+  }
+  
+  /* Ensure content stays above the decorative circle */
+  .stat-card > * {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Avatar Circle for Table */
+  .avatar-circle {
+    font-weight: bold;
+  }
+  
+  /* Custom Badge Colors for better visibility */
+  .bg-success-subtle {
+    background-color: #d1e7dd !important;
+  }
+  .bg-warning-subtle {
+    background-color: #fff3cd !important;
+  }
+  .bg-danger-subtle {
+    background-color: #f8d7da !important;
+  }
+  
+  /* Table Styling Tweaks */
+  .table th {
+    font-weight: 600;
+    color: #64748b;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .table td {
+    color: #334155;
+    font-size: 0.95rem;
+  }

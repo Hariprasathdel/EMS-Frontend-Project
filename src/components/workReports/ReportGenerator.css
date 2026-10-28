@@ -1,0 +1,55 @@
+/* ReportGenerator.css */
+.report-generator-card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    background-color: #ffffff;
+    height: 100%;
+  }
+  
+  .custom-form-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 0.4rem;
+  }
+  
+  .custom-form-control,
+  .custom-form-select {
+    border-radius: 0.5rem;
+    padding: 0.65rem 1rem;
+    border: 1px solid #cbd5e1;
+    font-size: 0.95rem;
+    color: #334155;
+    background-color: #f8fafc;
+    transition: all 0.2s ease;
+  }
+  
+  .custom-form-control:focus,
+  .custom-form-select:focus {
+    border-color: #4f46e5;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    outline: none;
+  }
+  
+  .btn-generate {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+    padding: 0.75rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-generate:hover:not(:disabled) {
+    background-color: #4338ca;
+    border-color: #4338ca;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3);
+  }
+  
+  .btn-generate:disabled {
+    background-color: #a5b4fc;
+    border-color: #a5b4fc;
+  }

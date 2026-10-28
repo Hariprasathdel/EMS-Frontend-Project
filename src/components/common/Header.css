@@ -1,0 +1,36 @@
+.header-container {
+    height: 70px;
+    position: sticky;
+    top: 0;
+    z-index: 900;
+  }
+  
+  /* Search Bar Styling */
+  .search-bar .input-group {
+    max-width: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .search-bar .form-control:focus {
+    box-shadow: none;
+    border-color: #4f46e5;
+  }
+  
+  .search-bar .input-group-text {
+    border: none;
+  }
+  
+  /* Utilities */
+  .cursor-pointer {
+    cursor: pointer;
+  }
+  
+  .notification-icon i {
+    transition: transform 0.2s;
+  }
+  
+  .notification-icon:hover i {
+    transform: scale(1.1);
+  }
