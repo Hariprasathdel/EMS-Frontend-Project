@@ -38,7 +38,13 @@ class AuthService {
 
       return { success: true, data: { user, token } };
     } catch (error) {
-      return { success: false, error: handleError(error) };
+      const handledError = handleError(error);
+      if (error.response?.status === 401) {
+        handledError.message = 'Invalid email or password. Please try again.';
+      } else if (!error.response) {
+        console.error('An unexpected error occurred:', error.message);
+      }
+      return { success: false, error: handledError };
     }
   }
 
