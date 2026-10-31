@@ -1,27 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import axios from 'axios';
-export const login = async (email, password) => {
-  try {
-    const response = await fetch('http://localhost:5002/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Login failed');
-    }
-
-    const data = await response.json();
-    return { success: true, ...data };
-  } catch (error) {
-    return { success: false, error };
-  }
-};
 /**
  * Custom hook for authentication
  * Provides auth state and methods with additional utilities
@@ -61,15 +40,6 @@ export const useAuth = () => {
       auth.logout();
     }
   }, [isTokenExpired, auth]);
-  // Set token in axios headers
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    } else {
-      delete axios.defaults.headers.common['Authorization'];
-    }
-  }, [auth.isAuthenticated]);
 
   return {
     ...auth,

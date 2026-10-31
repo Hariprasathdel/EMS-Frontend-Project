@@ -34,9 +34,15 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   // Login Function
-  const login = async (email, password) => {
+  const login = async (credentials, password) => {
+    // Support both login({ email, password }) and the existing login(email, password) call.
+    const { email, password: suppliedPassword } =
+      typeof credentials === 'object' && credentials !== null
+        ? credentials
+        : { email: credentials, password };
+
     try {
-      const result = await authService.login(email, password);
+      const result = await authService.login(email, suppliedPassword);
       if (!result.success) {
         return {
           success: false,
