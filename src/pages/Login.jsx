@@ -20,7 +20,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const result = await login(email.trim(), password);
+      const result = await login({ email: email.trim(), password });
       if (!result.success) {
         throw new Error(result.error?.message || 'Invalid credentials. Please check your email and password.');
       }

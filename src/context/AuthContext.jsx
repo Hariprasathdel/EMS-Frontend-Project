@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
         : { email: credentials, password };
 
     try {
-      const result = await authService.login(email, suppliedPassword);
+      const result = await authService.login({ email, password: suppliedPassword });
       if (!result.success) {
         setError(result.error?.message || 'Invalid credentials. Please try again.');
         return {

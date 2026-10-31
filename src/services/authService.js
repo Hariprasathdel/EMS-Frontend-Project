@@ -13,21 +13,28 @@ const AUTH_ENDPOINTS = {
 
 class AuthService {
   // Login user
-  async login(email, password) {
+  async login(credentials, suppliedPassword) {
     try {
+      // Accept the API's credentials object while preserving compatibility
+      // with callers that still pass email and password separately.
+      const { email, password } =
+        typeof credentials === 'object' && credentials !== null
+          ? credentials
+          : { email: credentials, password: suppliedPassword };
+      const normalizedEmail = typeof email === 'string' ? email.trim().toLowerCase() : '';
       // Login must not send a stale token from a previous session. The API
       // interceptor also uses this flag to keep login failures on the form.
       const response = await api.post(
         AUTH_ENDPOINTS.LOGIN,
-        { email, password },
+        { email: normalizedEmail, password },
         { skipAuth: true }
       );
       const payload = handleResponse(response);
       // The API wraps the authenticated user and token in `data`. Normalize it
       // here so the auth context always receives the shape it expects.
-      const credentials = payload.data ?? payload;
-      const token = credentials.token;
-      const user = credentials.user ?? (token ? { ...credentials, token: undefined } : null);
+      const session = payload.data ?? payload;
+      const token = session.token;
+      const user = session.user ?? (token ? { ...session, token: undefined } : null);
 
       if (!token || !user) {
         throw new Error(payload.message || 'The login response did not include session details.');
@@ -40,7 +47,10 @@ class AuthService {
     } catch (error) {
       const handledError = handleError(error);
       if (error.response?.status === 401) {
-        handledError.message = 'Invalid email or password. Please try again.';
+        // A failed sign-in must not leave a previous session active locally.
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        handledError.message = error.response.data?.message || 'Invalid email or password';
       } else if (!error.response) {
         console.error('An unexpected error occurred:', error.message);
       }
