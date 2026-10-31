@@ -6,13 +6,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f8fafc; /* Very light gray/blue background */
+  background-color: #7e22ce; /* Very light gray/blue background */
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 /* The Main Card */
 .login-card {
-  background: #ffffff;
+  background: #FFD700;
   width: 100%;
   max-width: 420px;
   padding: 40px;
