@@ -1,219 +1,152 @@
-// src/pages/Login.jsx
+// Login.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
-import './Login.css';
+import { useAuth } from '../context/AuthContext';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Login.css'; // Make sure to create this file
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login: authenticate } = useAuth();
-
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    remember: false,
-  });
-  const [errors, setErrors] = useState({});
+  const { login } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-    setErrors((prev) => ({ ...prev, [name]: '' }));
-  };
-
-  const validate = () => {
-    const errs = {};
-    if (!formData.email.trim()) errs.email = 'Email is required';
-    else if (!/^\S+@\S+\.\S+$/.test(formData.email))
-      errs.email = 'Enter a valid email address';
-    if (!formData.password) errs.password = 'Password is required';
-    else if (formData.password.length < 6)
-      errs.password = 'Password must be at least 6 characters';
-    return errs;
-  };
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const errs = validate();
-    if (Object.keys(errs).length) {
-      setErrors(errs);
-      return;
-    }
+    setError('');
     setLoading(true);
+
     try {
-      const response = await authenticate(formData.email, formData.password);
-      if (!response.success) {
-        setErrors({
-          general: response.error?.message || 'Login failed. Please check your credentials.'
-        });
-        return;
+      const result = await login(email.trim(), password);
+      if (!result.success) {
+        throw new Error(result.error?.message || 'Invalid credentials. Please check your email and password.');
       }
-      navigate('/dashboard');
+
+      navigate('/dashboard', { replace: true });
+      
     } catch (err) {
-      setErrors({ general: err.message || 'Invalid credentials. Try again.' });
+      setError(err.message || 'An unexpected error occurred. Please try again later.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="login-page">
-      <div className="login-page__overlay"></div>
-
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-12 col-sm-10 col-md-7 col-lg-5 col-xl-4">
-            <div className="login-card">
-              <div className="login-card__body">
-                {/* Logo & Title */}
-                <div className="login-brand text-center">
-                  <div className="login-brand__logo">
-                    <i className="bi bi-building" aria-hidden="true"></i>
-                  </div>
-                  <h3 className="login-brand__title">Welcome Back</h3>
-                  <p className="login-brand__subtitle">
-                    Sign in to your HRMS account
-                  </p>
-                </div>
-
-                {errors.general && (
-                  <div className="alert alert-danger py-2 small" role="alert">
-                    {errors.general}
-                  </div>
-                )}
-
-                <form onSubmit={handleSubmit} noValidate>
-                  {/* Email */}
-                  <div className="mb-3">
-                    <label htmlFor="email" className="login-label">
-                      Email Address
-                    </label>
-                    <div className="input-group login-input-group">
-                      <span className="input-group-text login-input-icon">
-                        <i className="bi bi-envelope"></i>
-                      </span>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        className={`form-control login-input ${
-                          errors.email ? 'is-invalid' : ''
-                        }`}
-                        placeholder="you@company.com"
-                        value={formData.email}
-                        onChange={handleChange}
-                        autoComplete="email"
-                      />
-                    </div>
-                    {errors.email && (
-                      <div className="text-danger small mt-1">{errors.email}</div>
-                    )}
-                  </div>
-
-                  {/* Password */}
-                  <div className="mb-3">
-                    <label htmlFor="password" className="login-label">
-                      Password
-                    </label>
-                    <div className="input-group login-input-group">
-                      <span className="input-group-text login-input-icon">
-                        <i className="bi bi-lock"></i>
-                      </span>
-                      <input
-                        type={showPassword ? 'text' : 'password'}
-                        id="password"
-                        name="password"
-                        className={`form-control login-input ${
-                          errors.password ? 'is-invalid' : ''
-                        }`}
-                        placeholder="Enter your password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        autoComplete="current-password"
-                      />
-                      <button
-                        type="button"
-                        className="input-group-text login-input-icon login-input-toggle"
-                        onClick={() => setShowPassword((s) => !s)}
-                        tabIndex={-1}
-                        aria-label="Toggle password visibility"
-                      >
-                        <i
-                          className={`bi ${
-                            showPassword ? 'bi-eye-slash' : 'bi-eye'
-                          }`}
-                        ></i>
-                      </button>
-                    </div>
-                    {errors.password && (
-                      <div className="text-danger small mt-1">
-                        {errors.password}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Remember & Forgot */}
-                  <div className="d-flex justify-content-between align-items-center mb-4">
-                    <div className="form-check">
-                      <input
-                        type="checkbox"
-                        id="remember"
-                        name="remember"
-                        className="form-check-input login-checkbox"
-                        checked={formData.remember}
-                        onChange={handleChange}
-                      />
-                      <label
-                        htmlFor="remember"
-                        className="form-check-label small"
-                      >
-                        Remember me
-                      </label>
-                    </div>
-                    <a href="/forgot-password" className="login-forgot">
-                      Forgot Password?
-                    </a>
-                  </div>
-
-                  {/* Submit */}
-                  <button
-                    type="submit"
-                    className="btn login-submit w-100"
-                    disabled={loading}
-                  >
-                    {loading ? (
-                      <>
-                        <span
-                          className="spinner-border spinner-border-sm me-2"
-                          role="status"
-                        ></span>
-                        Signing in...
-                      </>
-                    ) : (
-                      <>
-                        Sign In <i className="bi bi-arrow-right ms-1"></i>
-                      </>
-                    )}
-                  </button>
-                </form>
-
-                <p className="login-footer-text">
-                  Don't have an account?{' '}
-                  <a href="/signup" className="login-link">
-                    Contact Admin
-                  </a>
-                </p>
-              </div>
-            </div>
-
-            <p className="login-copyright">
-              © {new Date().getFullYear()} HRMS. All rights reserved.
-            </p>
+    <div className="login-wrapper">
+      <div className="login-card">
+        
+        {/* Header Icon */}
+        <div className="text-center">
+          <div className="icon-container">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6b46c1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+              <path d="M9 22v-4h6v4"></path>
+              <path d="M8 6h.01"></path>
+              <path d="M16 6h.01"></path>
+              <path d="M12 6h.01"></path>
+              <path d="M12 10h.01"></path>
+              <path d="M12 14h.01"></path>
+              <path d="M16 10h.01"></path>
+              <path d="M16 14h.01"></path>
+              <path d="M8 10h.01"></path>
+              <path d="M8 14h.01"></path>
+            </svg>
           </div>
+          <h3 className="fw-bold mt-3" style={{ color: '#1a202c' }}>Welcome Back</h3>
+          <p className="text-muted mb-4">Sign in to your HRMS account</p>
+        </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="alert custom-alert py-2 mb-3 text-center" role="alert">
+            {error}
+          </div>
+        )}
+
+        {/* Form */}
+        <form onSubmit={handleLogin}>
+          <div className="mb-3">
+            <label className="form-label custom-label" htmlFor="login-email">Email Address</label>
+            <div className="input-group custom-input-group">
+              <span className="input-group-text custom-icon-bg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4a5568" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </span>
+              <input
+                type="email"
+                id="login-email"
+                className="form-control custom-input"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label custom-label" htmlFor="login-password">Password</label>
+            <div className="input-group custom-input-group focused-ring">
+              <span className="input-group-text custom-icon-bg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4a5568" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </span>
+              <input
+                type={showPassword ? "text" : "password"}
+                id="login-password"
+                className="form-control custom-input"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <span 
+                className="input-group-text custom-icon-bg end-icon" 
+                onClick={() => setShowPassword(!showPassword)}
+                style={{ cursor: 'pointer' }}
+              >
+                {showPassword ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4a5568" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4a5568" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                )}
+              </span>
+            </div>
+          </div>
+
+          <div className="d-flex justify-content-between mb-4 align-items-center">
+            <div className="form-check">
+              <input type="checkbox" className="form-check-input custom-checkbox" id="rememberMe" />
+              <label className="form-check-label text-muted" htmlFor="rememberMe">Remember me</label>
+            </div>
+            <a href="#" className="text-decoration-none custom-link">Forgot Password?</a>
+          </div>
+
+          <button 
+            type="submit" 
+            className="btn w-100 py-2 custom-btn" 
+            disabled={loading}
+          >
+            {loading ? 'Signing In...' : (
+              <>Sign In <span style={{ marginLeft: '5px' }}>→</span></>
+            )}
+          </button>
+        </form>
+
+        <div className="text-center mt-4">
+          <small className="text-muted">
+          </small>
         </div>
       </div>
     </div>

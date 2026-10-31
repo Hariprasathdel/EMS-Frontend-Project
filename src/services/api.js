@@ -2,7 +2,9 @@
 import axios from 'axios';
 
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5002/api';
+// Use Vite's same-origin proxy in development. This keeps browser requests on
+// the frontend origin and lets vite.config.js forward them to the API server.
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 // Create axios instance with default config
 const api = axios.create({
